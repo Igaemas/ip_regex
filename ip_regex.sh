@@ -10,7 +10,17 @@ loop='127.0.0.1/8'
 for words in $ipA_output
 do
 	if [[ $words =~ ^$octet(\.$octet){3}/$mask|^$octet(\.$octet){3} ]]; then
-        	ip=$words
+
+		ip=$words
+		
+		readarray -d "." -t iparr <<< "$ip"
+		last_val="${iparr[3]}"
+
+		#if [[ $last_val != 255 ]]; then
+		#	echo $last_val 
+		#	echo "is not equal to 255"
+		#fi
+
 		if [[ $ip != $loop ]]; then
 			echo $ip
 		fi
